@@ -1,4 +1,4 @@
-# 12:00 timestamp
+# 28:23 timestamp
 # https://www.youtube.com/watch?v=jO6qQDNa2UY&ab_channel=TechWithTim
 
 import pygame

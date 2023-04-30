@@ -8,10 +8,13 @@ WIDTH,HEIGHT = 800,600
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("初めて")
 
+BORDER = pygame.Rect(WIDTH/2 -5, 0, 10, HEIGHT) # Draw rectangle
+
 RAINBOW_INDIGO = (30, 63, 102)
+WHITE = (255, 255, 255)
 FPS  = 144
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 55,40
-YELLOW_ANGLE, RED_ANGLE = 90, -90
+YELLOW_ANGLE, RED_ANGLE = -90, 90
 VELOCITY = 3
 
 # Object to be drawn (surface)
@@ -27,30 +30,31 @@ RED_SPACESHIP_IMAGE = pygame.transform.rotate(pygame.transform.scale(
 def draw_window(red, yellow):
         # Draw background before surface
         WIN.fill(RAINBOW_INDIGO)
+        pygame.draw.rect(WIN, WHITE, BORDER)
 
         # To draw surface
-        WIN.blit(YELLOW_SPACESHIP_IMAGE, (red.x, red.y)) # Within dimenssion of Window's W,H
-        WIN.blit(RED_SPACESHIP_IMAGE, (yellow.x, yellow.y)) # Within dimenssion of Window's W,H
+        WIN.blit(YELLOW_SPACESHIP_IMAGE, (yellow.x, yellow.y)) # Within dimenssion of Window's W,H
+        WIN.blit(RED_SPACESHIP_IMAGE, (red.x, red.y)) # Within dimenssion of Window's W,H
         pygame.display.update() # update the "drawing"
 
 def yellow_user_movement(keys_pressed, yellow):
-        if keys_pressed[pygame.K_LEFT]: # 左
+        if keys_pressed[pygame.K_LEFT] and yellow.x - VELOCITY > 0: # 左
             yellow.x -= VELOCITY
-        if keys_pressed[pygame.K_UP]: # 上
+        if keys_pressed[pygame.K_UP] and yellow.y - VELOCITY > 0: # 上
             yellow.y -= VELOCITY
-        if keys_pressed[pygame.K_RIGHT]: # 右
+        if keys_pressed[pygame.K_RIGHT] and yellow.x + yellow.width - 7 - VELOCITY < WIDTH: # 右
             yellow.x += VELOCITY
-        if keys_pressed[pygame.K_DOWN]: # 下
+        if keys_pressed[pygame.K_DOWN] and yellow.y + yellow.height + 20 - VELOCITY < HEIGHT: # 下
             yellow.y += VELOCITY
 
 def red_user_movement(keys_pressed, red):
-        if keys_pressed[pygame.K_a]: # 左
+        if keys_pressed[pygame.K_a] and red.x - VELOCITY > 0: # 左
             red.x -= VELOCITY
-        if keys_pressed[pygame.K_w]: # 上
+        if keys_pressed[pygame.K_w] and red.y - VELOCITY > 0: # 上
             red.y -= VELOCITY
-        if keys_pressed[pygame.K_d]: # 右
+        if keys_pressed[pygame.K_d] and red.x + red.width - 7 - VELOCITY < WIDTH: # 右
             red.x += VELOCITY
-        if keys_pressed[pygame.K_s]: # 下
+        if keys_pressed[pygame.K_s] and red.y + red.height + 20 - VELOCITY < HEIGHT: # 下
             red.y += VELOCITY
 
 # redrawing window, checking collision, update score など
